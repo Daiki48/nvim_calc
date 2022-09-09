@@ -10,7 +10,7 @@ let s:Multiply = 'multiply'
 let s:scriptdir = resolve(expand('<sfile>:p:h') . '/..')
 
 if ! exists('g:scorched_earth_program')
-  let g:scorched_earth_program = s:scriptdir . '/target/release/neovim-scorched-earth'
+  let g:nvim_calc = s:scriptdir . '/target/release/nvim_calc'
 endif
 
 " Entry point. Initialize RPC. If it succeeds, then attach commands to the `rpcnotify` invocations.
@@ -52,7 +52,7 @@ endfunction
 " Initialize RPC
 function! s:initRpc()
   if s:calculatorJobId == 0
-    let jobid = jobstart([g:scorched_earth_program], { 'rpc': v:true })
+    let jobid = jobstart([g:nvim_calc], { 'rpc': v:true })
     return jobid
   else
     return s:calculatorJobId
