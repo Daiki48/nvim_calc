@@ -7,8 +7,11 @@ endif
 let s:Add = 'add'
 let s:Multiply = 'multiply'
 
-" The path to the binary that was created out of 'cargo build' or 'cargo build --release". This will generally be 'target/release/name'
-let s:bin = '/Users/srishanbhattarai/Documents/code/rust/neovim-calculator/target/debug/neovim-calculator'
+let s:scriptdir = resolve(expand('<sfile>:p:h') . '/..')
+
+if ! exists('g:scorched_earth_program')
+  let g:scorched_earth_program = s:scriptdir . '/target/release/neovim-scorched-earth'
+endif
 
 " Entry point. Initialize RPC. If it succeeds, then attach commands to the `rpcnotify` invocations.
 function! s:connect()
@@ -49,7 +52,7 @@ endfunction
 " Initialize RPC
 function! s:initRpc()
   if s:calculatorJobId == 0
-    let jobid = jobstart([s:bin], { 'rpc': v:true })
+    let jobid = jobstart([g:scorched_earth_program], { 'rpc': v:true })
     return jobid
   else
     return s:calculatorJobId
